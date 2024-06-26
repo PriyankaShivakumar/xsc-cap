@@ -328,26 +328,53 @@ Once the project is created, there are some adjustments we need to make manually
    	}
     }
     ```
+ 7. Adjust SQL syntax in procedures. For instance, "UPDATE FROM" should be changed to "MERGE INTO", and "TRUNCATE" statements should be replaced with "DELETE FROM" statements.
+ 8. Currently, changes to Flowgraph, Reptask, and Replication artifacts are not covered. You will need to modify these manually. Unsupported types and functions in the calculation view such as "CE_FUNCTION", "CACHE", etc., need to be noted. Please refer to the [HANA Cloud Documentation](https://help.sap.com/docs/hana-cloud/sap-hana-cloud-overview-guide/sap-hana-cloud-overview-guide) for more details on how to handle these.
+    
 ## Step-6: Deployment of the Migrated database artifacts.
 
+1. In your dev space, the database connection and artifacts of your project will be visible under the "SAP HANA Projects" section.
+   
+2. Next, log in to your Cloud Foundry account using the following steps:
 
+   - Open a new terminal in the Business Application Studio
+   - Run the command `cf login -a < API_URL >` and input your username and password
 
-# Limitations
+3. For the Database Connection of the project, click "Bind" and then select "Bind to an HDI Container" and finally select the HDI container created in your SAP BTP Space. Once successfully bound, you will see a .env file with the VCAP services created in the db folder of your project.
+   
+4. Inside .env, extract the current schema value from VCAP services - this is your schema name. Replace < Schema Name > with this value in the `Admin.hdbroleconfig` and `Admin.hdbrole` files.
 
-1. Creating proxy cds for “.hdbtable”, “.hdbview”, “.hdbcalculationview”
+5. Click the "Open HDI Container" button to open the database explorer.
+   
+6. Open an SQL console with your DBADMIN user or with admin privileges.
+   
+7. Run the following query in SAP HANA Cloud to grant access: <Schema Name> should be replaced with your specific schema name.
+   ```
+   GRANT SELECT ON SCHEMA "_SYS_BI" TO "< Schema Name >#OO";
 
-2. Converting xsodata into cap service definition
+   GRANT SELECT ON "_SYS_BI"."M_TIME_DIMENSION" TO "< Schema Name >#OO";
 
-3. Converting “xsjs”,”xsjslib” into cap nodejs
+   GRANT UPDATE ON "_SYS_BI"."M_TIME_DIMENSION" TO "< Schema Name >#OO" WITH GRANT OPTION;
 
-4. Creating proxy cds for cross container schemas
+   GRANT INSERT, SELECT, UPDATE ON "_SYS_BI"."M_TIME_DIMENSION" TO "< Schema Name >#OO" WITH GRANT OPTION;
 
-5. Unsupported datatypes in calculation views ex: the date() function is not supported in SAP HANA Cloud, hence it needs to be converted into daydate()
+   GRANT SELECT ON SCHEMA "_SYS_BI" TO "< Schema Name >#OO" WITH GRANT OPTION;
+   ```
+8. To deploy your application, select the "Deploy" button located in the "SAP HANA Projects" section.
 
-6. SQL syntax changes in procedure is not integrated ex: UPDATE FROM has to be changed to MERGE INTO, TRUNCATE statement has to be changed to DELETE FROM statement
+## Known Issues in SAP HANA Application Migration Assistant
+- If the package name provided does not exist in the source system, the migration process will still continue without any disruption. In this case, a template project without any artifacts will be created.
+- In the SAP Hana Migration Assistant, even if you change your password after a successful login, it will not update in the environment even though it appears updated in the user interface. The Assistant retrieves it from the environment and the Migration proceeds without issue. If you wish to confirm the password change, after altering the password field, simply click the login button. This will update the password in the environment.
 
-7. Flowgraph and Replication Artefacts Changes are not supported
+## Features that are currently out of scope in SAP HANA Application Migration Assistant:
 
+1. Converting xsodata into cap service definition
+   
+2. Converting “xsjs”,”xsjslib” into cap nodejs
+   
+3. Creating proxy cds for cross container schema
+   
+4. Following Artifacts are not currently supported '.hdbreptask', '.hdbvirtualtable', '.hdbflowgraph'
 
 ## How to Obtain Support
 
