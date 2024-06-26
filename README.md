@@ -1,17 +1,27 @@
-# SAP HANA Application Migration Assistant
+# XS Classic Programming Model To SAP Cloud Application Programming Model Migration Guide
+ 
+The SAP HANA Application Migration Assistant converts the source XS Classic application which is packaged as a Delivery Unit to a CAP application with SAP HANA Cloud as a database where the Source XSC Repository artifacts are converted to the corresponding target CAP artifacts.
 
-Tool for migrating XS Classic application to XS Advanced Programming Model or Cloud Application Programming Model.  
+## Introduction
+SAP HANA Interactive Education or SHINE is a demo application that is packaged as [HCO_DEMOCONTENT](https://github.com/SAP-samples/hana-shine/releases/download/v2.5.0/HCO_DEMOCONTENT-1.205.0.tgz) Delivery Unit. It includes the following features:
+- **HDI Features:**
+  - Table
+  - HDBDD Views
+  - Sequence
+  - Calculation Views
+  - Analytical Views
+  - Attribute Views
+  - Associations
+  - Table Functions
+  - Synonyms
+  - Procedures
+  - Spatial Features
+  - Local Time Data Generation
+  - Index
+  - Structured Privilege
+  - Analytical Privilege
 
-## XSC to XSA:  
-
-The SAP HANA Application Migration Assistant converts the source XS Classic application which is packaged as a Delivery Unit into XS Advanced application which also includes conversion of synchronous XSJS to async-XSJS.
-
-## XSC to CAP:  
-
-The SAP HANA Application Migration Assistant converts the source XSC application  to a CAP application with SAP HANA Cloud as a database where the Source XSC Repository  artefacts are converted to the corresponding target CAP artefacts.
-
-
-## Architecture
+HCO_DEMOCONTENT follows the XS Classic Programming Model(XSC) and uses SAP HANA on-premise for the database. This article describes the steps to be followed to Migrate this Delivery Unit from XSC to the Cloud Application Programming Model(CAP) with SAP HANA Cloud as the database using the SAP HANA Application Migration Assistant.
 
 ### Solution Diagram
 
@@ -19,111 +29,102 @@ The SAP HANA Application Migration Assistant converts the source XSC application
 <img src="https://github.wdf.sap.corp/storage/user/131107/files/108b8b5a-2ac4-41fb-be56-bef892f660f5" width="600" height="400">
 </p>
 
-## Prerequisites
+## Requirements
+- XSC on-premise database source system with the [HCO_DEMOCONTENT](https://github.com/SAP-samples/hana-shine/releases/download/v2.5.0/HCO_DEMOCONTENT-1.205.0.tgz) delivery unit.
+- SAP Business Technology Platform subaccount with `SAP Hana Cloud` and `SAP Hana Schemas and HDI Containers` service instances .
+- SAP Business Application Studio Subscription.
+- SAP Cloud Connector
 
-* SAP Cloud Connector
-* SAP BTP account
-* SAP Business Application Studio
+## Where to Start
+We have successfully migrated the HCO_DEMOCONTENT sample delivery unit using the SAP HANA Application Migration Assistant. The path followed for this Migration involves the below steps:
 
-## Configuration
+- Install and Configure the SAP Cloud Connector.
+- Setup an SAP BTP Destination to connect to the source system.
+- Create a SAP Business Application Studio Devspace with the SAP HANA Application Migration Assistant Extension installed.
+- Migrate using SAP HANA Application Migration Assistant.
+- Post Migration Changes.
+- Deployment of the Migrated database artifacts.
 
-### Install SAP Cloud Connector
+#### **Note:** 
+#### 1. SAP HANA Application Migration Assistant covers only the migration of the database artifacts from SAP Hana on-premise to SAP Hana Cloud.
+#### 2. The migration steps should be tested in a development environment before production.
+#### 3. This guide is directed at single-tenant-applications.
 
-1. Install Cloud Connector to your local system from [Cloud-Connector](https://tools.hana.ondemand.com/#cloud)
+## Steps
+## Step-1: Install and Configure the SAP Cloud Connector
 
-2. Refer to the help documentation https://help.sap.com/docs/connectivity/sap-btp-connectivity-cf/installation?locale=en-US 
-  	   for the installation and prerequisites for cloud connector setup.  
+1. Install the [SAP Cloud Connector](https://tools.hana.ondemand.com/#cloud) on your local system. For the installation and setup of the cloud connector, please refer to this [Documentation](https://help.sap.com/docs/connectivity/sap-btp-connectivity-cf/installation?locale=en-US).  
   
-3. Once the cloud connector is installed, open it in the browser on the port setup as https://localhost:<port-no>/ and login with the correct 
-	   credentials
-	
-4. Click on connector in the left menu and add your subaccount which has the source database and also add the subaccount where the bas 
-	   subscription is created and add the subaccount details  
+2. After installing the cloud connector, you can access it by opening your web browser and going to `https://localhost:<port-no>/`. Use your credentials to log in.
+   
+3. Once you've successfully logged in, you should set up two connections in the Cloud Connector. The first connection should link to the subaccount with the source database, and the second connection should be for the target subaccount with the SAP Hana Cloud. To establish these connections, click on the connector button in the left menu. Now, enter the necessary details for your subaccount - this includes the Region, Subaccount ID, Display Name, Subaccount User, Password, and Location ID. After entering all the information, click on 'Save'.
 
 <p align="center">
 <img src="https://github.wdf.sap.corp/storage/user/128039/files/1db1f985-178a-4b85-adce-71417fcec8b1" width="500" height="300">
 </p>
 
-5. Choose the subaccount where the source db is present and add a service channel under on-prem to cloud with the following details:  
+4. Select the subaccount where the source database is located, then add a service channel under 'on-prem to cloud' using the following details:  
 	
-   1. Type: HANA Database  
+   - **Type**: HANA Database
 	
-   2. HANA Instance Name: <DB/Schema ID>  
+   - **HANA Instance Name**: < DB/Schema ID >
 	
-   3. Local Instance Number: any number from 00 to 09( this is a double digit number which is used to compute the port number to access sap 			instance in hana cloud, local port is derived from local instance no 3<n<15, for eg if no=7, then local port = 30715)  
+   - **Local Instance Number**: Input any two-digit number between 00 and 09. This number is used to compute the port number needed to access the SAP instance in the Hana Cloud. The local port is calculated from the local instance number (3<n<15). For example, if the number is 7, then the local port would be 30715.
 	
-   4. Connections: 1  
-
+   - **Connections**: 1
 
 <p align="center">
 <img src="https://github.wdf.sap.corp/storage/user/128039/files/86f3b93e-e155-4ee4-8f31-49000d6b28db" width="500" height="350">
 </p>
 
-
-6. In the BTP cf account where the BAS subscription is created, choose cloud to on prem and add mapping with the following details:  
+5. In the SAP Business Technology Platform (BTP) Cloud Foundry account where the Business Application Studio (BAS) subscription is created, select 'Cloud to On-Prem' and add a mapping with the following details:  
 	
-   1. Back-end Type: SAP Hana  
+   - **Back-end Type**: SAP Hana  
 	
-   2. Protocol: TCP  
+   - **Protocol**: TCP  
 	
-   3. Internal Host: localhost  
+   - **Internal Host**: localhost  
 	
-   4. Internal Port: <portno>(derived from local instance number)  
+   - **Internal Port**: < portno > (The port number derived from your local instance number)  
 	
-   5. Virtual Host: myvirtualhost  
+   - **Virtual Host**: myvirtualhost  
 	
-   6. Virtual Port: same as internal port  
+   - **Virtual Port**: This should be the same as your internal port
 	
-   7. Principal Type: None  
+   - **Principal Type**: None  
 		
 <p align="center">
 <img src="https://github.wdf.sap.corp/storage/user/128039/files/3ce89ee6-9929-4ab8-8a78-8f6b0b85b25d" width="500" height="350">
 </p>
 	
-
-
-### Setup BTP Destination
+## Step-2: Setup an SAP BTP Destination to connect to the source system
   
-1. Go to the BTP cf subaccount and select destination from Connectivity from the left menu pane and create a new destination with the following  	    details: 
+Navigate to the BTP Cloud Foundry subaccount and select 'Destination' under 'Connectivity' from the left menu pane. Create a new destination using the following details:
+ 
+ - **Name**: < Destination name >
+ - **Type**: HTTP
+ - **URL**: `https://<internal-host>:<internal-port-no>/`
+ - **ProxyType**: on-premise
+ - **Authentication**: Basic Authentication
+ - **Locationid**: Location id as mentioned in cloud connector
+ - **User and Password**: SAP Hana Database login credentials 
 
-   1. Name: <destination name>
-
-   2. Type: HTTP
-
-   3. URL: "https://<internal-host>:<internal-port-no>/" 
-
-   4. ProxyType: on-premise
-
-   5. Authentication: Basic Authentication 
-
-   6. Locationid: Location id as mentioned in cloud connector
-
-   7. User and Password: Hana Db login credentials 
-
- And the following additional properties: 
-
-   1. HTML5.DynamicDestination : true 
-
-   2. WebIDEEnabled : true 
-
-   3. WebIDEUsage : xs_hdb 
+And the following additional properties: 
+ - **HTML5.DynamicDestination** : true
+ - **WebIDEEnabled** : true
+ - **WebIDEUsage** : xs_hdb 
 	
 <p align="center">
 <img src="https://github.wdf.sap.corp/storage/user/128039/files/f1d3639e-15c9-4692-9e55-21bb2fd06fc2" width="500" height="300">
 </p>
+
+## Step-3: Create a SAP Business Application Studio Devspace with the SAP HANA Application Migration Assistant Extension installed  
 	
+1. In the sub-account where you created the destination, establish a subscription to SAP Business Application Studio (BAS).
 
-
-### BAS Configuration:  
-	
-1. In the sub-account that the destination is present, create a subscription to SAP Business Application Studio.  
-	
-
-2. Open BAS from this subscription and select “Create DevSpace”, give it a name and choose the appropriate application type and then select SAP 	   HANA Application Migration Assistant Extension.  
-
-
-3. Open the DevSpace and create a new workspace, then select the SAP HANA Application Migration Assistant from the Command Palette (View->Command 	     Palette or (Ctrl+Shift+P).  
-	
+2. Open BAS from this subscription and select "Create DevSpace". Assign a name to it and choose relevant application type, and then choose the `SAP HANA Application Migration Assistant Extension`. Also Choose `SAP Hana Tools` Extension which is required later for deployment.
+   
+3. Open the DevSpace you’ve created and create a new workspace. From within this workspace, select the SAP HANA Application Migration Assistant from the Command Palette (You can access the Command Palette from View -> Command Palette).
 
 # SAP HANA Application Migration Assistant
 
