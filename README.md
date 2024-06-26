@@ -38,12 +38,12 @@ HCO_DEMOCONTENT follows the XS Classic Programming Model(XSC) and uses SAP HANA 
 ## Where to Start
 We have successfully migrated the HCO_DEMOCONTENT sample delivery unit using the SAP HANA Application Migration Assistant. The path followed for this Migration involves the below steps:
 
-- Install and Configure the SAP Cloud Connector.
-- Setup an SAP BTP Destination to connect to the source system.
-- Create a SAP Business Application Studio Devspace with the SAP HANA Application Migration Assistant Extension installed.
-- Migrate using SAP HANA Application Migration Assistant.
-- Post Migration Changes.
-- Deployment of the Migrated database artifacts.
+1. Install and Configure the SAP Cloud Connector.
+2. Setup an SAP BTP Destination to connect to the source system.
+3. Create a SAP Business Application Studio Devspace with the SAP HANA Application Migration Assistant Extension installed.
+4. Migrate using the SAP HANA Application Migration Assistant.
+5. Post Migration Changes.
+6. Deployment of the Migrated database artifacts.
 
 #### **Note:** 
 #### 1. SAP HANA Application Migration Assistant covers only the migration of the database artifacts from SAP Hana on-premise to SAP Hana Cloud.
@@ -122,92 +122,215 @@ And the following additional properties:
 	
 1. In the sub-account where you created the destination, establish a subscription to SAP Business Application Studio (BAS).
 
-2. Open BAS from this subscription and select "Create DevSpace". Assign a name to it and choose relevant application type, and then choose the `SAP HANA Application Migration Assistant Extension`. Also Choose `SAP Hana Tools` Extension which is required later for deployment.
+2. Open the BAS from the subscription and select "Create Dev Space". Assign a desired name to your Dev Space and select the "Full Stack Cloud Application" type. Then, choose the `SAP HANA Application Migration Assistant` Extension to help with migration, as well as the `SAP Hana Tools` Extension which will be required later for deployment. Finally, click on "Create Dev Space".
    
-3. Open the DevSpace you’ve created and create a new workspace. From within this workspace, select the SAP HANA Application Migration Assistant from the Command Palette (You can access the Command Palette from View -> Command Palette).
+3. Wait for the status of your newly created Dev Space to change to "Running". Once it's running, you can open it by clicking on the name of the Dev space that you just created.
+   
+4. Navigate to the folder by clicking on File -> Open Folder. Enter the path `/home/user/projects/` and click on OK.
+   
+5. Once the folder opens, you can select the SAP HANA Application Migration Assistant from the Command Palette (You can access the Command Palette from View -> Command Palette).
 
-# SAP HANA Application Migration Assistant
+## Step-4: Migrate using the SAP HANA Application Migration Assistant
 
-## How to launch Guided Development
-
-	Use Command Palette -> CMD/CTRL + Shift + P
+1. Open the the Command Palette and type "SAP HANA Application Migration Assistant" and select the command when it appears.
 	
-	Type command -> SAP HANA Application Migration Assistant
-	
-1. Select the Migration Path - XSC->XSA or XSC->CAP.  	
-	
+2. When the Migration Assistant Wizard opens, select the migration path. Since we are migrating from XSC to CAP, select `XSC to CAP` as your migration path.		
 
 <p align="center">
   <img width="536" alt="MicrosoftTeams-image (22)" src="https://github.com/I562818/xsc-cap/assets/159874418/f9af13e0-08f5-44f3-ba27-c511f89e675e">
 </p>
 
 
-
-2. Configure the Data Source:  
+3. In the Data Source page of the wizard, choose the destination you previously created from the dropdown menu. 
 	
-   Select your Destination from the dropdown.  
-	
-	
-
 <p align="center">
   <img width="544" alt="MicrosoftTeams-image (23)" src="https://github.com/I562818/xsc-cap/assets/159874418/7a00a7af-f6db-408a-8b36-9a7d2184cc7f">
 </p>
 
-
-
-
-
-   Enter the Hana DB Credentials for the Technical Username and Password fields and click on login to complete the authentication.
-
+4. Enter the user credentials for the SAP HANA Database Migration User - username and password - into their respective fields. Hit the login button to authorize these credentials.
 	
 <p align="center">
 <img width="545" alt="MicrosoftTeams-image (24)" src="https://github.com/I562818/xsc-cap/assets/159874418/373cf1ed-b503-47e5-96e9-1f42d7ac1f3d">
 </p>
 
-
-
-
-   Click on Next.  
+5. To proceed, click on the Next button.  
 		
-
 <p align="center">
 <img src="https://github.wdf.sap.corp/storage/user/128039/files/a3ee9d97-3ee6-48f8-91c0-6ee76f7f8db8" width="300" height="200">
 </p>
 
-	
-3. Enter the Source Delivery Unit name.  	
+6. In the "Migration Options" page, select "Delivery Unit" as your source type from the drop-down menu.
+  
+7. Enter the name of your Source Delivery Unit - in this case, it would be `HCO_DEMOCONTENT`.	
 
 <p align="center">
 <img src="https://github.wdf.sap.corp/storage/user/128039/files/c50cbf48-2d80-49cd-9a01-c7dac60bfdc6" width="500" height="300">
 </p>
-	
 
-
-
-
-4. Choose the target directory where the migration results will be stored.  	
+8. Choose the target directory. This is where the migration results will be stored.
+   
+   **Note:** Ensure that the directory you select is a sub-directory of `/home/user/projects`.	
 
 <p align="center">
 <img src="https://github.wdf.sap.corp/storage/user/128039/files/61026d83-a977-4879-bb0e-bb6abb2efdcf" width="500" height="320">
 </p>
 
-
-
-5. Enter the Target Folder name for the migration results folder and click on Finish. 
+9. Specify a unique name for the Target Folder, where the migration results will be saved. Once you've entered the name, click on Finish.
 
 <p align="center">
 <img src="https://github.wdf.sap.corp/storage/user/128039/files/431d9a83-7e13-4383-b995-34967a0a4c68" width="550" height="400">
 </p>
 
-
-
-
-6. You will now see a pop-up at the bottom right of your window mentioning that the migration has started and all the respective steps there onward. 
-
+10. Once you see the pop-up notification at the bottom right corner of your screen, it means that the migration process is underway. This notification will keep you updated on all the steps that follow. At the end of the process, a CAP project with the revised database artifacts will be created. Additionally, a `report.html` file will be generated within the project. This file contains detailed information about your project's migration.
 
 <p align="center">
 <img src="https://github.wdf.sap.corp/storage/user/128039/files/47e72bfc-a1bf-47a4-baff-67087e3278e0" width="350" height="220">
 </p>
+
+## Step-5: Post Migration Changes
+Once the project is created, there are some adjustments we need to make manually as these are not currently handled by the Assistant.
+ 1. If your project contains any files from a different schema, these need to be migrated before migrating the current Delivery Unit and included in this project. If this can't be done immediately, you can remove them for the time being. To utilize objects from other containers, please refer to the HANA Cloud help documentation and configure accordingly.
+    
+    For the HCO_DEMOCONTENT project, make the following changes:
+    - Delete the uis folder from db/cfg
+    - Delete `synonym-grantor-service.hdbgrants` and `synonym-grantor-service.hdbsynonymconfig` from db/cfg
+    - Delete `synonym-grantor-service.hdbsynonym` from db/src/uis/db
+ 2. In order to access objects from other public schemas, you will need to either create a new hdbsynonym file or modify an existing one.
+    For the HCO_DEMOCONTENT project, edit the `db/src/synonym-grantor-service.hdbsynonym` file with the following configuration:
+    ```
+    {
+    	"SAP_HANA_DEMOCONTENT_EPM_DUMMY": {
+        	"target": {
+        		"schema": "SYS",
+        		"object": "DUMMY"
+        	}
+   	},
+    	"SAP_HANA_DEMOCONTENT_EPM_M_TIME_DIMENSION": {
+        	"target": {
+        		"schema": "_SYS_BI",
+        		"object": "M_TIME_DIMENSION"
+        	}
+    	},
+    	"M_TIME_DIMENSION":{
+        	"target": {
+        		"schema": "_SYS_BI",
+        		"object": "M_TIME_DIMENSION"
+        	}
+    	}
+    }
+    ```
+ 3. In addition, please take the time to clear out unused role names from the `default_access_role.hdbrole` file located in the db/src/defaults folder. If there are specific roles required for your project, ensure to add them as needed.
+    For the HCO_DEMOCONTENT project, Remove `SAP_HANA_DEMOCONTENT_EPM_MIGRATION_ALL_ANALYTIC_PRIV` role under names. 
+ 4. The assistant will modify the name of the artifacts in your project. Therefore, ensure to update the references to these artifacts accordingly.
+    For the HCO_DEMOCONTENT project, you'll need to adjust the references for entities under the `currencyConversionTables` tag. This is located in the `db/src/models/PURCHASE_COMMON_CURRENCY.hdbcalculationview` file. Make the changes as follows:
+    ```
+    <currencyConversionTables rates="SAP_HANA_DEMOCONTENT_EPM_DATA_CONVERSIONS_TCURR" configuration="SAP_HANA_DEMOCONTENT_EPM_DATA_CONVERSIONS_TCURV" prefactors="SAP_HANA_DEMOCONTENT_EPM_DATA_CONVERSIONS_TCURF" notations="SAP_HANA_DEMOCONTENT_EPM_DATA_CONVERSIONS_TCURN" precisions="SAP_HANA_DEMOCONTENT_EPM_DATA_CONVERSIONS_TCURX"/>
+    ```
+ 5.  Unused configurations should be removed from hdbrole files, or these files should be adjusted to add supported options.
+     For the HCO_DEMOCONTENT project, make the following alterations:
+     - In `db/src/roles/User.hdbrole`, eliminate the following unused configurations:
+       ```
+       {
+    	 "reference": "_SYS_BIC",
+    	 "privileges": [
+       		"EXECUTE",
+        	"SELECT"
+    	 ]
+       },
+       {
+    	 "reference": "_SYS_REPO",
+    	 "privileges": [
+        	"EXECUTE",
+        	"SELECT"
+    	 ]
+       },
+       {
+    	 "reference": "_SYS_RT",
+    	 "privileges": [
+        	"SELECT"
+    	 ]
+       }
+       ```
+       **Reason**: During the deployment step, access permissions will be granted by executing certain SQL commands.
+       
+     - In `db/src/roles/Admin.hdbrole`, eliminate the following unused configurations:
+       ```
+       {
+    	 "name": "REPOSITORY_REST",
+    	 "type": "PROCEDURE",
+    	 "privileges": 
+         [
+            "EXECUTE"
+         ]
+       }
+       ```
+       **Reason**: Roles are not needed for executing procedures in the same container. Instead, you can add authorization based on users in CAP.
+     - Alter `db/src/roles/Admin.hdbrole` by replacing the existing schema privileges and adding schema analytic privileges:
+       ```
+       "schema_privileges": [
+   	{
+      		"reference": "< Schema Name >",
+      		"privileges": [
+         		"SELECT METADATA",
+         		"SELECT CDS METADATA",
+         		"SELECT",
+         		"INSERT",
+         		"EXECUTE",
+         		"DELETE",
+         		"UPDATE",
+         		"CREATE TEMPORARY TABLE"
+      		]
+   	}
+	],
+       "schema_analytic_privileges": [
+   	{
+      		"schema_reference": "< Schema Name >",
+      		"privileges": [
+         		"SAP_HANA_DEMOCONTENT_EPM_MODELS_AP_SALES_ORDER_6",
+         		"SAP_HANA_DEMOCONTENT_EPM_MODELS_AP_SALES_ORDER",
+         		"SAP_HANA_DEMOCONTENT_EPM_MODELS_AP_SALES_ORDER_1",
+         		"SAP_HANA_DEMOCONTENT_EPM_MODELS_AP_SALES_ORDER_2",
+         		"SAP_HANA_DEMOCONTENT_EPM_MODELS_AP_SALES_ORDER_4",
+         		"SAP_HANA_DEMOCONTENT_EPM_MODELS_AP_SALES_ORDER_12",
+         		"SAP_HANA_DEMOCONTENT_EPM_MODELS_AP_SALES_ORDER_3",
+         		"SAP_HANA_DEMOCONTENT_EPM_MODELS_AP_SALES_ORDER_9",
+         		"SAP_HANA_DEMOCONTENT_EPM_MODELS_AP_PURCHASE_ORDER_2",
+         		"SAP_HANA_DEMOCONTENT_EPM_MODELS_AP_SALES_ORDER_10",
+         		"SAP_HANA_DEMOCONTENT_EPM_MODELS_AP_PURCHASE_ORDER_PROD_CAT_1",
+         		"SAP_HANA_DEMOCONTENT_EPM_MODELS_AP_SALES_ORDER_16",
+         		"SAP_HANA_DEMOCONTENT_EPM_MODELS_AP_PURCHASE_ORDER_3",
+         		"SAP_HANA_DEMOCONTENT_EPM_MODELS_AP_PURCHASE_ORDER_PROD_CAT_1_1054430",
+         		"SAP_HANA_DEMOCONTENT_EPM_MODELS_AP_SALES_ORDER_5",
+         		"SAP_HANA_DEMOCONTENT_EPM_MODELS_AP_PURCHASE_ORDER_1",
+         		"SAP_HANA_DEMOCONTENT_EPM_MODELS_AP_SALES_ORDER_7",
+         		"SAP_HANA_DEMOCONTENT_EPM_MODELS_AP_PURCHASE_ORDER_PROD_CAT_2",
+         		"SAP_HANA_DEMOCONTENT_EPM_MODELS_AP_PURCHASE_ORDER",
+         		"SAP_HANA_DEMOCONTENT_EPM_MODELS_AP_PURCHASE_ORDER_PROD_CAT",
+        	 	"SAP_HANA_DEMOCONTENT_EPM_MODELS_AP_SALES_ORDER_11",
+         		"SAP_HANA_DEMOCONTENT_EPM_MODELS_AP_SALES_ORDER_13",
+         		"SAP_HANA_DEMOCONTENT_EPM_MODELS_AP_SALES_ORDER_15",
+         		"SAP_HANA_DEMOCONTENT_EPM_MODELS_AP_SALES_ORDER_8",
+         		"SAP_HANA_DEMOCONTENT_EPM_MIGRATION_ALL_PRIV",
+        	 	"SAP_HANA_DEMOCONTENT_EPM_MODELS_AP_SALES_ORDER_14"
+      		]
+   	}
+	],
+       ```
+       **Reason**: The modifications in the hdbrole file are needed to access calculation views with analytic privileges.
+ 6. Assign the permission to users with the admin role for accessing the schema.
+    For the HCO_DEMOCONTENT project, create an `Admin.hdbroleconfig` file in the `db/src/roles/` directory. The file should contain the following configuration:
+    ```
+    {
+   	"SAP_HANA_DEMOCONTENT_EPM_ROLES_ADMIN": {
+      		"< Schema Name >": {
+         		"schema": "< Schema Name >"
+      		}
+   	}
+    }
+    ```
+## Step-6: Deployment of the Migrated database artifacts.
+
+
 
 # Limitations
 
