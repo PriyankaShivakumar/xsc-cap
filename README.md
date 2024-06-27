@@ -1,4 +1,4 @@
-# XS Classic Programming Model To SAP Cloud Application Programming Model Migration Guide
+# XS Classic Programming Model To SAP Cloud Application Programming Model Migration Using SAP HANA Application Migration Assistant
  
 The SAP HANA Application Migration Assistant converts the source XS Classic application which is packaged as a Delivery Unit to a CAP application with SAP HANA Cloud as a database where the Source XSC Repository artifacts are converted to the corresponding target CAP artifacts.
 
@@ -199,24 +199,24 @@ Once the project is created, there are some adjustments we need to make manually
     For the HCO_DEMOCONTENT project, edit the `db/src/synonym-grantor-service.hdbsynonym` file with the following configuration:
     ```
     {
-    	"SAP_HANA_DEMOCONTENT_EPM_DUMMY": {
-        	"target": {
-        		"schema": "SYS",
-        		"object": "DUMMY"
-        	}
-   	},
-    	"SAP_HANA_DEMOCONTENT_EPM_M_TIME_DIMENSION": {
-        	"target": {
-        		"schema": "_SYS_BI",
-        		"object": "M_TIME_DIMENSION"
-        	}
-    	},
-    	"M_TIME_DIMENSION":{
-        	"target": {
-        		"schema": "_SYS_BI",
-        		"object": "M_TIME_DIMENSION"
-        	}
-    	}
+      "SAP_HANA_DEMOCONTENT_EPM_DUMMY": {
+         "target": {
+           "schema": "SYS",
+           "object": "DUMMY"
+         }
+      },
+      "SAP_HANA_DEMOCONTENT_EPM_M_TIME_DIMENSION": {
+         "target": {
+           "schema": "_SYS_BI",
+           "object": "M_TIME_DIMENSION"
+         }
+      },
+      "M_TIME_DIMENSION":{
+         "target": {
+           "schema": "_SYS_BI",
+           "object": "M_TIME_DIMENSION"
+         }
+      }
     }
     ```
  3. In addition, please take the time to clear out unused role names from the `default_access_role.hdbrole` file located in the db/src/defaults folder. If there are specific roles required for your project, ensure to add them as needed.
@@ -233,21 +233,21 @@ Once the project is created, there are some adjustments we need to make manually
        {
     	 "reference": "_SYS_BIC",
     	 "privileges": [
-       		"EXECUTE",
-        	"SELECT"
+            "EXECUTE",
+            "SELECT"
     	 ]
        },
        {
     	 "reference": "_SYS_REPO",
     	 "privileges": [
-        	"EXECUTE",
-        	"SELECT"
+            "EXECUTE",
+            "SELECT"
     	 ]
        },
        {
     	 "reference": "_SYS_RT",
     	 "privileges": [
-        	"SELECT"
+            "SELECT"
     	 ]
        }
        ```
@@ -268,64 +268,64 @@ Once the project is created, there are some adjustments we need to make manually
      - Alter `db/src/roles/Admin.hdbrole` by replacing the existing schema privileges and adding schema analytic privileges:
        ```
        "schema_privileges": [
-   	{
-      		"reference": "< Schema Name >",
-      		"privileges": [
-         		"SELECT METADATA",
-         		"SELECT CDS METADATA",
-         		"SELECT",
-         		"INSERT",
-         		"EXECUTE",
-         		"DELETE",
-         		"UPDATE",
-         		"CREATE TEMPORARY TABLE"
-      		]
-   	}
-	],
+       {
+      	  "reference": "< Schema Name >",
+      	  "privileges": [
+             "SELECT METADATA",
+             "SELECT CDS METADATA",
+             "SELECT",
+             "INSERT",
+             "EXECUTE",
+             "DELETE",
+             "UPDATE",
+             "CREATE TEMPORARY TABLE"
+      	  ]
+       }
+       ],
        "schema_analytic_privileges": [
-   	{
-      		"schema_reference": "< Schema Name >",
-      		"privileges": [
-         		"SAP_HANA_DEMOCONTENT_EPM_MODELS_AP_SALES_ORDER_6",
-         		"SAP_HANA_DEMOCONTENT_EPM_MODELS_AP_SALES_ORDER",
-         		"SAP_HANA_DEMOCONTENT_EPM_MODELS_AP_SALES_ORDER_1",
-         		"SAP_HANA_DEMOCONTENT_EPM_MODELS_AP_SALES_ORDER_2",
-         		"SAP_HANA_DEMOCONTENT_EPM_MODELS_AP_SALES_ORDER_4",
-         		"SAP_HANA_DEMOCONTENT_EPM_MODELS_AP_SALES_ORDER_12",
-         		"SAP_HANA_DEMOCONTENT_EPM_MODELS_AP_SALES_ORDER_3",
-         		"SAP_HANA_DEMOCONTENT_EPM_MODELS_AP_SALES_ORDER_9",
-         		"SAP_HANA_DEMOCONTENT_EPM_MODELS_AP_PURCHASE_ORDER_2",
-         		"SAP_HANA_DEMOCONTENT_EPM_MODELS_AP_SALES_ORDER_10",
-         		"SAP_HANA_DEMOCONTENT_EPM_MODELS_AP_PURCHASE_ORDER_PROD_CAT_1",
-         		"SAP_HANA_DEMOCONTENT_EPM_MODELS_AP_SALES_ORDER_16",
-         		"SAP_HANA_DEMOCONTENT_EPM_MODELS_AP_PURCHASE_ORDER_3",
-         		"SAP_HANA_DEMOCONTENT_EPM_MODELS_AP_PURCHASE_ORDER_PROD_CAT_1_1054430",
-         		"SAP_HANA_DEMOCONTENT_EPM_MODELS_AP_SALES_ORDER_5",
-         		"SAP_HANA_DEMOCONTENT_EPM_MODELS_AP_PURCHASE_ORDER_1",
-         		"SAP_HANA_DEMOCONTENT_EPM_MODELS_AP_SALES_ORDER_7",
-         		"SAP_HANA_DEMOCONTENT_EPM_MODELS_AP_PURCHASE_ORDER_PROD_CAT_2",
-         		"SAP_HANA_DEMOCONTENT_EPM_MODELS_AP_PURCHASE_ORDER",
-         		"SAP_HANA_DEMOCONTENT_EPM_MODELS_AP_PURCHASE_ORDER_PROD_CAT",
-        	 	"SAP_HANA_DEMOCONTENT_EPM_MODELS_AP_SALES_ORDER_11",
-         		"SAP_HANA_DEMOCONTENT_EPM_MODELS_AP_SALES_ORDER_13",
-         		"SAP_HANA_DEMOCONTENT_EPM_MODELS_AP_SALES_ORDER_15",
-         		"SAP_HANA_DEMOCONTENT_EPM_MODELS_AP_SALES_ORDER_8",
-         		"SAP_HANA_DEMOCONTENT_EPM_MIGRATION_ALL_PRIV",
-        	 	"SAP_HANA_DEMOCONTENT_EPM_MODELS_AP_SALES_ORDER_14"
-      		]
-   	}
-	],
+       {
+      	  "schema_reference": "< Schema Name >",
+      	  "privileges": [
+             "SAP_HANA_DEMOCONTENT_EPM_MODELS_AP_SALES_ORDER_6",
+             "SAP_HANA_DEMOCONTENT_EPM_MODELS_AP_SALES_ORDER",
+             "SAP_HANA_DEMOCONTENT_EPM_MODELS_AP_SALES_ORDER_1",
+             "SAP_HANA_DEMOCONTENT_EPM_MODELS_AP_SALES_ORDER_2",
+             "SAP_HANA_DEMOCONTENT_EPM_MODELS_AP_SALES_ORDER_4",
+             "SAP_HANA_DEMOCONTENT_EPM_MODELS_AP_SALES_ORDER_12",
+             "SAP_HANA_DEMOCONTENT_EPM_MODELS_AP_SALES_ORDER_3",
+             "SAP_HANA_DEMOCONTENT_EPM_MODELS_AP_SALES_ORDER_9",
+             "SAP_HANA_DEMOCONTENT_EPM_MODELS_AP_PURCHASE_ORDER_2",
+             "SAP_HANA_DEMOCONTENT_EPM_MODELS_AP_SALES_ORDER_10",
+             "SAP_HANA_DEMOCONTENT_EPM_MODELS_AP_PURCHASE_ORDER_PROD_CAT_1",
+             "SAP_HANA_DEMOCONTENT_EPM_MODELS_AP_SALES_ORDER_16",
+             "SAP_HANA_DEMOCONTENT_EPM_MODELS_AP_PURCHASE_ORDER_3",
+             "SAP_HANA_DEMOCONTENT_EPM_MODELS_AP_PURCHASE_ORDER_PROD_CAT_1_1054430",
+             "SAP_HANA_DEMOCONTENT_EPM_MODELS_AP_SALES_ORDER_5",
+             "SAP_HANA_DEMOCONTENT_EPM_MODELS_AP_PURCHASE_ORDER_1",
+             "SAP_HANA_DEMOCONTENT_EPM_MODELS_AP_SALES_ORDER_7",
+             "SAP_HANA_DEMOCONTENT_EPM_MODELS_AP_PURCHASE_ORDER_PROD_CAT_2",
+             "SAP_HANA_DEMOCONTENT_EPM_MODELS_AP_PURCHASE_ORDER",
+             "SAP_HANA_DEMOCONTENT_EPM_MODELS_AP_PURCHASE_ORDER_PROD_CAT",
+             "SAP_HANA_DEMOCONTENT_EPM_MODELS_AP_SALES_ORDER_11",
+             "SAP_HANA_DEMOCONTENT_EPM_MODELS_AP_SALES_ORDER_13",
+             "SAP_HANA_DEMOCONTENT_EPM_MODELS_AP_SALES_ORDER_15",
+             "SAP_HANA_DEMOCONTENT_EPM_MODELS_AP_SALES_ORDER_8",
+             "SAP_HANA_DEMOCONTENT_EPM_MIGRATION_ALL_PRIV",
+             "SAP_HANA_DEMOCONTENT_EPM_MODELS_AP_SALES_ORDER_14"
+      	  ]
+       }
+       ],
        ```
        **Reason**: The modifications in the hdbrole file are needed to access calculation views with analytic privileges.
  6. Assign the permission to users with the admin role for accessing the schema.
     For the HCO_DEMOCONTENT project, create an `Admin.hdbroleconfig` file in the `db/src/roles/` directory. The file should contain the following configuration:
     ```
     {
-   	"SAP_HANA_DEMOCONTENT_EPM_ROLES_ADMIN": {
-      		"< Schema Name >": {
-         		"schema": "< Schema Name >"
-      		}
-   	}
+      "SAP_HANA_DEMOCONTENT_EPM_ROLES_ADMIN": {
+         "< Schema Name >": {
+            "schema": "< Schema Name >"
+         }
+      }
     }
     ```
  7. Adjust SQL syntax in procedures. For instance, "UPDATE FROM" should be changed to "MERGE INTO", and "TRUNCATE" statements should be replaced with "DELETE FROM" statements.
