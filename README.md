@@ -26,7 +26,7 @@ HCO_DEMOCONTENT follows the XS Classic Programming Model(XSC) and uses SAP HANA 
 ### Solution Diagram
 
 <p align="center">
-<img src="https://github.wdf.sap.corp/storage/user/131107/files/108b8b5a-2ac4-41fb-be56-bef892f660f5" width="600" height="400">
+<img src="images\TAM.png" width="600" height="400">
 </p>
 
 ## Requirements
@@ -60,7 +60,7 @@ We have successfully migrated the HCO_DEMOCONTENT sample delivery unit using the
 3. Once you've successfully logged in, you should set up two connections in the Cloud Connector. The first connection should link to the subaccount with the source database, and the second connection should be for the target subaccount with the SAP Hana Cloud. To establish these connections, click on the connector button in the left menu. Now, enter the necessary details for your subaccount - this includes the Region, Subaccount ID, Display Name, Subaccount User, Password, and Location ID. After entering all the information, click on 'Save'.
 
 <p align="center">
-<img src="https://github.wdf.sap.corp/storage/user/128039/files/1db1f985-178a-4b85-adce-71417fcec8b1" width="500" height="300">
+	<img src="images\dest1.png" width="600" height="400">
 </p>
 
 4. Select the subaccount where the source database is located, then add a service channel under 'on-prem to cloud' using the following details:  
@@ -74,7 +74,7 @@ We have successfully migrated the HCO_DEMOCONTENT sample delivery unit using the
    - **Connections**: 1
 
 <p align="center">
-<img src="https://github.wdf.sap.corp/storage/user/128039/files/86f3b93e-e155-4ee4-8f31-49000d6b28db" width="500" height="350">
+	<img src="images\dest2.png" width="600" height="400">
 </p>
 
 5. In the SAP Business Technology Platform (BTP) Cloud Foundry account where the Business Application Studio (BAS) subscription is created, select 'Cloud to On-Prem' and add a mapping with the following details:  
@@ -94,7 +94,7 @@ We have successfully migrated the HCO_DEMOCONTENT sample delivery unit using the
    - **Principal Type**: None  
 		
 <p align="center">
-<img src="https://github.wdf.sap.corp/storage/user/128039/files/3ce89ee6-9929-4ab8-8a78-8f6b0b85b25d" width="500" height="350">
+	<img src="images\dest3.png" width="600" height="400">
 </p>
 	
 ## Step-2: Setup an SAP BTP Destination to connect to the source system
@@ -115,7 +115,7 @@ And the following additional properties:
  - **WebIDEUsage** : xs_hdb 
 	
 <p align="center">
-<img src="https://github.wdf.sap.corp/storage/user/128039/files/f1d3639e-15c9-4692-9e55-21bb2fd06fc2" width="500" height="300">
+	<img src="images\dest4.png" width="600" height="400">
 </p>
 
 ## Step-3: Create a SAP Business Application Studio Devspace with the SAP HANA Application Migration Assistant Extension installed  
@@ -137,29 +137,35 @@ And the following additional properties:
 2. When the Migration Assistant Wizard opens, select the migration path. Since we are migrating from XSC to CAP, select `XSC to CAP` as your migration path.		
 
 <p align="center">
-	<img width="536" alt="homescreen" src="https://github.com/PriyankaShivakumar/xsc-cap/assets/159874418/9753c30d-4757-4fc8-b16e-f4fee406c3db">
+  <img width="536" alt="HomeScreen" src="images\homescreen.png">
 </p>
 
 
 3. In the Data Source page of the wizard, choose the destination you previously created from the dropdown menu. 
 	
 <p align="center">
-	<img width="544" alt="destList" src="https://github.com/PriyankaShivakumar/xsc-cap/assets/159874418/f8282966-e360-4eea-a7b7-1b344c9fc61e">
+  <img width="544" alt="DestinationList" src="images\destList.png">
 </p>
 
 4. Enter the user credentials for the SAP HANA Database Migration User - username and password - into their respective fields. Hit the login button to authorize these credentials.
 	
 <p align="center">
-	<img width="545" alt="login" src="https://github.com/PriyankaShivakumar/xsc-cap/assets/159874418/24602c28-5d10-4c7c-907b-110d87fa1490">
+<img width="545" alt="LoginPage" src="images\login.png">
 </p>
 
 5. To proceed, click on the Next button.  
 		
 <p align="center">
-	<img width="674" alt="loginenabled" src="https://github.com/PriyankaShivakumar/xsc-cap/assets/159874418/ff8ff865-726b-4761-9e5c-01e84ba95ccb">
+<img width="300" alt="optionEnabled" src="images\loginenabled.png" >
 </p>
 
-6. In the "Migration Options" page, select "Delivery Unit" as your source type from the drop-down menu.
+6. Select the Source system type.
+
+<p align="center">
+<img width="300"  src="images\selectType.png">
+</p>
+
+7. In the "Migration Options" page, select "Delivery Unit" as your source type from the drop-down menu.
 
 <p align="center">
   <img width="524" alt="selectType" src="https://github.com/PriyankaShivakumar/xsc-cap/assets/159874418/eb2aa3d1-0efd-4761-bfa2-bee1a8c49efc">
