@@ -137,34 +137,38 @@ And the following additional properties:
 2. When the Migration Assistant Wizard opens, select the migration path. Since we are migrating from XSC to CAP, select `XSC to CAP` as your migration path.		
 
 <p align="center">
-  <img width="536" alt="MicrosoftTeams-image (22)" src="https://github.com/I562818/xsc-cap/assets/159874418/f9af13e0-08f5-44f3-ba27-c511f89e675e">
+	<img width="536" alt="homescreen" src="https://github.com/PriyankaShivakumar/xsc-cap/assets/159874418/9753c30d-4757-4fc8-b16e-f4fee406c3db">
 </p>
 
 
 3. In the Data Source page of the wizard, choose the destination you previously created from the dropdown menu. 
 	
 <p align="center">
-  <img width="544" alt="MicrosoftTeams-image (23)" src="https://github.com/I562818/xsc-cap/assets/159874418/7a00a7af-f6db-408a-8b36-9a7d2184cc7f">
+	<img width="544" alt="destList" src="https://github.com/PriyankaShivakumar/xsc-cap/assets/159874418/f8282966-e360-4eea-a7b7-1b344c9fc61e">
 </p>
 
 4. Enter the user credentials for the SAP HANA Database Migration User - username and password - into their respective fields. Hit the login button to authorize these credentials.
 	
 <p align="center">
-<img width="545" alt="MicrosoftTeams-image (24)" src="https://github.com/I562818/xsc-cap/assets/159874418/373cf1ed-b503-47e5-96e9-1f42d7ac1f3d">
+	<img width="545" alt="login" src="https://github.com/PriyankaShivakumar/xsc-cap/assets/159874418/24602c28-5d10-4c7c-907b-110d87fa1490">
 </p>
 
 5. To proceed, click on the Next button.  
 		
 <p align="center">
-<img src="https://github.wdf.sap.corp/storage/user/128039/files/a3ee9d97-3ee6-48f8-91c0-6ee76f7f8db8" width="300" height="200">
+	<img width="674" alt="loginenabled" src="https://github.com/PriyankaShivakumar/xsc-cap/assets/159874418/ff8ff865-726b-4761-9e5c-01e84ba95ccb">
 </p>
 
 6. In the "Migration Options" page, select "Delivery Unit" as your source type from the drop-down menu.
-  
+
+<p align="center">
+  <img width="524" alt="selectType" src="https://github.com/PriyankaShivakumar/xsc-cap/assets/159874418/eb2aa3d1-0efd-4761-bfa2-bee1a8c49efc">
+</p>
+
 7. Enter the name of your Source Delivery Unit - in this case, it would be `HCO_DEMOCONTENT`.	
 
 <p align="center">
-<img src="https://github.wdf.sap.corp/storage/user/128039/files/c50cbf48-2d80-49cd-9a01-c7dac60bfdc6" width="500" height="300">
+	<img width="587" alt="DU1" src="https://github.com/PriyankaShivakumar/xsc-cap/assets/159874418/0886d6e8-2cd7-4ae3-a8f3-24e1589b60ac">
 </p>
 
 8. Choose the target directory. This is where the migration results will be stored.
@@ -172,19 +176,19 @@ And the following additional properties:
    **Note:** Ensure that the directory you select is a sub-directory of `/home/user/projects`.	
 
 <p align="center">
-<img src="https://github.wdf.sap.corp/storage/user/128039/files/61026d83-a977-4879-bb0e-bb6abb2efdcf" width="500" height="320">
+	<img width="586" alt="DU2" src="https://github.com/PriyankaShivakumar/xsc-cap/assets/159874418/a1186e8a-8b9c-4daa-b857-1208706d0805">
 </p>
 
 9. Specify a unique name for the Target Folder, where the migration results will be saved. Once you've entered the name, click on Finish.
 
 <p align="center">
-<img src="https://github.wdf.sap.corp/storage/user/128039/files/431d9a83-7e13-4383-b995-34967a0a4c68" width="550" height="400">
+	<img width="588" alt="DU3" src="https://github.com/PriyankaShivakumar/xsc-cap/assets/159874418/da36d176-1f91-4393-9ed8-a824b11bc4cf">
 </p>
 
 10. Once you see the pop-up notification at the bottom right corner of your screen, it means that the migration process is underway. This notification will keep you updated on all the steps that follow. At the end of the process, a CAP project with the revised database artifacts will be created. Additionally, a `report.html` file will be generated within the project. This file contains detailed information about your project's migration.
 
 <p align="center">
-<img src="https://github.wdf.sap.corp/storage/user/128039/files/47e72bfc-a1bf-47a4-baff-67087e3278e0" width="350" height="220">
+	<img width="290" alt="end2" src="https://github.com/PriyankaShivakumar/xsc-cap/assets/159874418/5db3148a-4efd-433f-9d82-6d04876b4092">
 </p>
 
 ## Step-5: Post Migration Changes
